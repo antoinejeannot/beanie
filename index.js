@@ -14,7 +14,7 @@ const DEFAULT_FILE = path.join(
 function rules(file) {
   try {
     const text = fs.readFileSync(file, "utf8").trim()
-    return `BEANIE — my principles, from ${file}. They win over generic defaults.\n\n${text}`
+    return `BEANIE — my engineering principles, read from ${file} on each request. Apply them to the work that you write and to the work that you review. When they disagree with a generic default, they win.\n\n${text}`
   } catch {
     return undefined
   }
