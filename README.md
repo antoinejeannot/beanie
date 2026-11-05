@@ -9,20 +9,21 @@
 
 <p align="center"><em>Ponytail for bald guys.</em></p>
 
-Your principles, in front of the model, on every [OpenCode](https://opencode.ai) request.
+Your rules. In the prompt. Every call.
+
+One file. One plugin. 70 lines. For [OpenCode](https://opencode.ai).
 
 ## When
 
-Your rules must be in the prompt at the moment the model decides something. There are two such moments, and OpenCode covers only one.
-
 | The model is called | `AGENTS.md` | beanie |
 | --- | --- | --- |
-| **Agent loop** — your message, and every continuation after a tool call | in the prompt | in the prompt |
-| **Compaction** — the session gets long, OpenCode summarises it | **missing** | in the prompt |
+| Your message | yes | yes |
+| After each tool call | yes | yes |
+| Compaction: the session gets summarised | **no** | yes |
 
-The second one is the expensive gap. The summary is written without your rules, and every later turn is built on that summary.
+Compaction is the gap. The summary drops your rules. Each later turn is built on that summary.
 
-beanie reads your file from disk on each of those calls. Edit a rule and the next message already follows it: no restart, no reload, no copy to keep in sync. One file, one plugin, 70 lines.
+beanie reads your file at each call. Edit a rule. The next message obeys it. No restart.
 
 ## Install
 
@@ -31,38 +32,36 @@ beanie reads your file from disk on each of those calls. Edit a rule and the nex
 { "plugins": ["/path/to/beanie"] }
 ```
 
-Your rules go in `~/.config/opencode/BEANIE.md`. Start from the one here, then make it yours:
+Put your rules in place:
 
 ```sh
 cp beanie/BEANIE.md ~/.config/opencode/BEANIE.md
 ```
 
+Write your own. The file here is only a start.
+
 ## Modes
 
-| Command | What happens |
+| Command | What it does |
 | --- | --- |
-| `/beanie` | He restates your rules in his own words, and names the ones this task puts at risk |
-| `/beanie off` | Hat off. No rules in the prompt |
-| `/beanie on` | Hat back on |
+| `/beanie` | He says your rules again, in his words. He names the ones at risk now. |
+| `/beanie off` | Hat off. No rules. |
+| `/beanie on` | Hat on. |
 
-`off` and `on` are remembered, in every session, until you change them. Text after the command stays: `/beanie add a retry to the webhook client`.
+The mode stays until you change it. Text after the command stays too.
 
 ## The principles
 
-> You are a staff engineer who does not like to write code. The best code is the code that you never write.
+> The best code is the code that you never write.
 
-**The floor** — simplicity never removes validation at a trust boundary, error handling that prevents data loss, security, accessibility, or anything that was asked for.
+- **The floor** — never cut these to make a change smaller: validation, error handling that saves data, security, accessibility, what I asked for.
+- **Before you write** — know the full scope. Use what the codebase has.
+- **The change** — the smallest diff that fully works. Fix the root cause one time. Test the behavior, not the code: a test must fail when you delete the implementation. No useless comments.
+- **Before you show it** — run the hooks. Remove all that you can. One commit, one job. Show it only when you are proud of it.
+- **How you write** — Simplified Technical English. End each reply with what you did not do.
 
-**Before you write** — know the full scope. Be consistent: the codebase is one puzzle.
-
-**The change** — KISS and YAGNI. Be lazy about the solution, never about the change. Keep the diff minimal. Fix the root cause once. New logic is unfinished without its check. Test the behavior that is specified, not the code that you wrote — a test must fail when you delete the implementation. Do one thing well. Write no useless comments. Decide for the long term.
-
-**Before you show it** — run the hooks. Criticize your own work. Remove everything that you can. One commit for one unit of work. Show it only when you are proud of it.
-
-**How you write** — ASD-STE100 Simplified Technical English. End each reply with what you did not do.
-
-The full text is in [BEANIE.md](BEANIE.md).
+Full text: [BEANIE.md](BEANIE.md).
 
 ## Credit
 
-The mechanism comes from [ponytail](https://github.com/DietrichGebert/ponytail), which does much more. beanie keeps the hook, and makes your own file the single source.
+From [ponytail](https://github.com/DietrichGebert/ponytail). beanie keeps the hook. Your file is the only source.
