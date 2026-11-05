@@ -40,16 +40,42 @@ beanie reads the file at each call. Edit a rule. The next message obeys it. No r
 
 ## Install
 
-```jsonc
-// ~/.config/opencode/opencode.json
-{ "plugins": ["/path/to/beanie"] }
+```sh
+opencode plugin add github:antoinejeannot/beanie
 ```
+
+Then put the rules where beanie reads them:
 
 ```sh
-cp beanie/BEANIE.md ~/.config/opencode/BEANIE.md
+curl -o ~/.config/opencode/BEANIE.md \
+  https://raw.githubusercontent.com/antoinejeannot/beanie/main/BEANIE.md
 ```
 
-Another path:
+Write your own. The file here is only a start.
+
+### Update
+
+```sh
+opencode plugin update beanie
+```
+
+The installed commit stays pinned until you run it.
+
+### Work on the plugin
+
+Clone it and give the directory instead. Each edit applies at the next message, with no push and no update.
+
+```jsonc
+// ~/.config/opencode/opencode.json — comments are allowed
+{
+  "plugins": [
+    // "github:antoinejeannot/beanie" to run the published commit instead
+    "/path/to/beanie"
+  ]
+}
+```
+
+### Another rules file
 
 ```jsonc
 { "plugins": [{ "package": "/path/to/beanie", "options": { "file": "/absolute/path/rules.md" } }] }
