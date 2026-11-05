@@ -11,11 +11,18 @@
 
 Your principles, in front of the model, on every [OpenCode](https://opencode.ai) request.
 
-## Why
+## When
 
-OpenCode puts your `AGENTS.md` in the system prompt of the agent loop. It does not put it in the compaction request. So when a long session is summarised, the summary is written **without your rules**, and the agent continues from that summary.
+Your rules must be in the prompt at the moment the model decides something. There are two such moments, and OpenCode covers only one.
 
-beanie appends your rules to both requests. One file, one plugin, 70 lines.
+| The model is called | `AGENTS.md` | beanie |
+| --- | --- | --- |
+| **Agent loop** — your message, and every continuation after a tool call | in the prompt | in the prompt |
+| **Compaction** — the session gets long, OpenCode summarises it | **missing** | in the prompt |
+
+The second one is the expensive gap. The summary is written without your rules, and every later turn is built on that summary.
+
+beanie reads your file from disk on each of those calls. Edit a rule and the next message already follows it: no restart, no reload, no copy to keep in sync. One file, one plugin, 70 lines.
 
 ## Install
 
