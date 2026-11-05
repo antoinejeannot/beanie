@@ -9,21 +9,36 @@
 
 <p align="center"><em>Ponytail for bald guys.</em></p>
 
-Your rules. In the prompt. Every call.
+My software principles, exported.
 
-One file. One plugin. 70 lines. For [OpenCode](https://opencode.ai).
+## What
+
+beanie puts one file of engineering principles in every [OpenCode](https://opencode.ai) prompt.
+
+It ships with mine, in [BEANIE.md](BEANIE.md). Keep them, cut them, or point beanie at your own file.
 
 ## When
 
-| The model is called | `AGENTS.md` | beanie |
-| --- | --- | --- |
-| Your message | yes | yes |
-| After each tool call | yes | yes |
-| Compaction: the session gets summarised | **no** | yes |
+Measured with a probe plugin, not guessed:
 
-Compaction is the gap. The summary drops your rules. Each later turn is built on that summary.
+| The model is called | beanie |
+| --- | --- |
+| Your message | yes |
+| After each tool call | yes |
+| Compaction: the session gets summarised | yes |
 
-beanie reads your file at each call. Edit a rule. The next message obeys it. No restart.
+Your rules are the **last** part of the system prompt. They come after `AGENTS.md`.
+
+beanie reads the file at each call. Edit a rule. The next message obeys it. No restart.
+
+## Why not just `AGENTS.md`
+
+`AGENTS.md` reaches the same calls. I measured that too. beanie gives you four other things:
+
+- One file for every project. Not one block per repository.
+- The last word in the prompt.
+- `/beanie off`. No file to edit.
+- `/beanie`. The agent says the rules back, so you see that it read them.
 
 ## Install
 
@@ -32,13 +47,15 @@ beanie reads your file at each call. Edit a rule. The next message obeys it. No 
 { "plugins": ["/path/to/beanie"] }
 ```
 
-Put your rules in place:
-
 ```sh
 cp beanie/BEANIE.md ~/.config/opencode/BEANIE.md
 ```
 
-Write your own. The file here is only a start.
+Another path:
+
+```jsonc
+{ "plugins": [{ "package": "/path/to/beanie", "options": { "file": "/absolute/path/rules.md" } }] }
+```
 
 ## Modes
 
