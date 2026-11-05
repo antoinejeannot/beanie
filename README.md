@@ -9,8 +9,6 @@
 
 <p align="center"><em>Ponytail for bald guys.</em></p>
 
-My software principles, exported.
-
 ## What
 
 beanie puts one file of engineering principles in every [OpenCode](https://opencode.ai) prompt.
