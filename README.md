@@ -1,60 +1,61 @@
-# beanie
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.png">
+    <img src="assets/logo.png" width="200" alt="beanie">
+  </picture>
+</p>
 
-Ponytail for bald guys.
+<h1 align="center">beanie</h1>
 
-beanie keeps your engineering principles in front of the model on each [OpenCode](https://opencode.ai) request. One file holds the rules, one plugin puts them in the system prompt. There are no levels, no modes and no state.
+<p align="center"><em>Ponytail for bald guys.</em></p>
+
+Your principles, in front of the model, on every [OpenCode](https://opencode.ai) request.
 
 ## Why
 
-OpenCode puts the `AGENTS.md` of a location in the system prompt of the agent loop. It does not put it in the compaction request, so the summary of a long session is written without your rules, and the agent continues from that summary. beanie appends your rules to both requests.
+OpenCode puts your `AGENTS.md` in the system prompt of the agent loop. It does not put it in the compaction request. So when a long session is summarised, the summary is written **without your rules**, and the agent continues from that summary.
 
-The rules stay in one file that you own. A copy in a second place goes stale, and then the two disagree.
+beanie appends your rules to both requests. One file, one plugin, 70 lines.
 
 ## Install
 
-Clone this repository, then add its directory to `plugins` in `~/.config/opencode/opencode.json`:
-
 ```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugins": ["/path/to/beanie"]
-}
+// ~/.config/opencode/opencode.json
+{ "plugins": ["/path/to/beanie"] }
 ```
 
-Write your rules in `~/.config/opencode/BEANIE.md`. The `BEANIE.md` of this repository is a starting point, not a standard:
+Your rules go in `~/.config/opencode/BEANIE.md`. Start from the one here, then make it yours:
 
 ```sh
-cp /path/to/beanie/BEANIE.md ~/.config/opencode/BEANIE.md
+cp beanie/BEANIE.md ~/.config/opencode/BEANIE.md
 ```
 
-To read them from a different file, give an absolute path:
+## Modes
 
-```jsonc
-{
-  "plugins": [{ "package": "/path/to/beanie", "options": { "file": "/absolute/path/rules.md" } }]
-}
-```
+| Command | What happens |
+| --- | --- |
+| `/beanie` | He restates your rules in his own words, and names the ones this task puts at risk |
+| `/beanie off` | Hat off. No rules in the prompt |
+| `/beanie on` | Hat back on |
 
-A missing file is not an error. beanie appends nothing and OpenCode continues.
+`off` and `on` are remembered, in every session, until you change them. Text after the command stays: `/beanie add a retry to the webhook client`.
 
-## The /beanie command
+## The principles
 
-`/beanie` asks the agent to restate your rules in its own words, one line for each rule, and to name the rules that the current task puts most at risk. A restatement shows that the agent read them; a copy shows nothing.
+> You are a staff engineer who does not like to write code. The best code is the code that you never write.
 
-Text after the command stays:
+**The floor** — simplicity never removes validation at a trust boundary, error handling that prevents data loss, security, accessibility, or anything that was asked for.
 
-```
-/beanie add a retry to the webhook client
-```
+**Before you write** — know the full scope. Be consistent: the codebase is one puzzle.
 
-## Test
+**The change** — KISS and YAGNI. Be lazy about the solution, never about the change. Keep the diff minimal. Fix the root cause once. New logic is unfinished without its check. Test the behavior that is specified, not the code that you wrote — a test must fail when you delete the implementation. Do one thing well. Write no useless comments. Decide for the long term.
 
-```sh
-node --test
-```
+**Before you show it** — run the hooks. Criticize your own work. Remove everything that you can. One commit for one unit of work. Show it only when you are proud of it.
 
-The tests replace the implementation to prove that each one fails without it.
+**How you write** — ASD-STE100 Simplified Technical English. End each reply with what you did not do.
+
+The full text is in [BEANIE.md](BEANIE.md).
 
 ## Credit
 
-The mechanism comes from [ponytail](https://github.com/DietrichGebert/ponytail), which does much more. beanie keeps the system-prompt hook, and makes your own file the single source.
+The mechanism comes from [ponytail](https://github.com/DietrichGebert/ponytail), which does much more. beanie keeps the hook, and makes your own file the single source.

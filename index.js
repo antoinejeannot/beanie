@@ -32,8 +32,10 @@ export default {
 
   async setup(ctx) {
     const file = ctx.options?.file ?? DEFAULT_FILE
+    let on = (await ctx.storage.get("on")) ?? true
 
     const inject = (event) => {
+      if (!on) return
       const text = rules(file)
       if (text) event.system.push({ type: "text", text })
     }
@@ -43,11 +45,22 @@ export default {
     await ctx.command.transform((editor) => {
       editor.add({
         name: "beanie",
-        description: "The bald guy in the beanie restates his principles, and names the ones this task puts at risk",
+        description: "The bald guy in the beanie restates his principles, or takes the hat off with on and off",
         execute: async ({ sessionID, prompt, delivery }) => {
+          const text = (prompt.text ?? "").trim()
+
+          if (text === "on" || text === "off") {
+            on = text === "on"
+            await ctx.storage.set("on", on)
+            await ctx.session.synthetic({
+              sessionID,
+              text: on ? `beanie on, from ${file}` : "beanie off, until you say `/beanie on`",
+            })
+            return
+          }
+
           // The prefix shifts every attachment offset, so a mention would point at the wrong text.
           const strip = (items) => items?.map(({ mention, ...item }) => item)
-          const text = (prompt.text ?? "").trim()
           const template = restate(file)
           await ctx.session.prompt({
             ...prompt,
