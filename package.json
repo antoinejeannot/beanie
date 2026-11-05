@@ -1,0 +1,28 @@
+{
+  "name": "@antoinejeannot/beanie",
+  "version": "0.1.0",
+  "description": "Ponytail for bald guys: your engineering principles in every OpenCode request.",
+  "keywords": ["opencode", "opencode-plugin", "principles", "system-prompt"],
+  "license": "MIT",
+  "author": {
+    "name": "Antoine Jeannot",
+    "email": "antoine.jeannot1002+github@gmail.com",
+    "url": "https://github.com/antoinejeannot"
+  },
+  "homepage": "https://github.com/antoinejeannot/beanie",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoinejeannot/beanie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/antoinejeannot/beanie/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": ["index.js", "BEANIE.md"],
+  "scripts": {
+    "test": "node --test"
+  }
+}
