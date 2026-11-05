@@ -43,7 +43,7 @@ export default {
     await ctx.command.transform((editor) => {
       editor.add({
         name: "beanie",
-        description: "Restate my principles, and the ones the task puts most at risk",
+        description: "The bald guy in the beanie restates his principles, and names the ones this task puts at risk",
         execute: async ({ sessionID, prompt, delivery }) => {
           // The prefix shifts every attachment offset, so a mention would point at the wrong text.
           const strip = (items) => items?.map(({ mention, ...item }) => item)
